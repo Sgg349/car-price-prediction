@@ -23,18 +23,18 @@ def predict():
         transmission = request.form.get('transmission')
         owner = request.form.get('owner')
         
-        # Process input data
+        # Process input data into a DataFrame
         data = pd.DataFrame([[year, km_driven, fuel, seller_type, transmission, owner]],
                             columns=['year', 'km_driven', 'fuel', 'seller_type', 'transmission', 'owner'])
         
-        # One-hot encoding for categorical features
-        data = pd.get_dummies(data, columns=['fuel', 'seller_type', 'transmission', 'owner'])
+        # Align data with model features
+        data_transformed = model.named_steps['preprocessor'].transform(data)
         
-        # Align data with training features
-        data = data.reindex(columns=model.feature_names_in_, fill_value=0)
+        # Convert the transformed data back to a DataFrame
+        data_transformed_df = pd.DataFrame(data_transformed, columns=model.named_steps['preprocessor'].get_feature_names_out())
         
         # Make prediction
-        prediction = model.predict(data)[0]
+        prediction = model.named_steps['regressor'].predict(data_transformed_df)[0]
         
         # Render the prediction on the index page
         return render_template('index.html', prediction_text=f'Estimated Selling Price: ₹{prediction:.2f}')
