@@ -1,55 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Car Price Prediction</title>
-</head>
-<body>
-    <h1>Car Price Prediction</h1>
-    
-    <form action="/predict" method="POST">
-        <label for="name">Car Model:</label>
-        <input type="text" id="name" name="name" required><br><br>
-        
-        <label for="year">Year:</label>
-        <input type="text" id="year" name="year" required><br><br>
-        
-        <label for="km_driven">Kilometers Driven:</label>
-        <input type="text" id="km_driven" name="km_driven" required><br><br>
-        
-        <label for="fuel">Fuel Type:</label>
-        <select id="fuel" name="fuel" required>
-            <option value="Petrol">Petrol</option>
-            <option value="Diesel">Diesel</option>
-            <option value="CNG">CNG</option>
-            <option value="Electric">Electric</option>
-        </select><br><br>
-        
-        <label for="seller_type">Seller Type:</label>
-        <select id="seller_type" name="seller_type" required>
-            <option value="Dealer">Dealer</option>
-            <option value="Individual">Individual</option>
-        </select><br><br>
-        
-        <label for="transmission">Transmission:</label>
-        <select id="transmission" name="transmission" required>
-            <option value="Manual">Manual</option>
-            <option value="Automatic">Automatic</option>
-        </select><br><br>
-        
-        <label for="owner">Owner Type:</label>
-        <select id="owner" name="owner" required>
-            <option value="First Owner">First Owner</option>
-            <option value="Second Owner">Second Owner</option>
-            <option value="Third Owner">Third Owner</option>
-        </select><br><br>
-        
-        <button type="submit">Predict Price</button>
-    </form>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
 
-    {% if prediction_text %}
+        h1 {
+            color: #333;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 700px;
+        }
+
+        .form-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 0.75rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.2rem;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color:#333; 
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+            margin-top: 2rem;
+            font-size: 1.5rem;
+        }
+        .predcol{
+            color: aqua;
+            background-color: #151915;
+        }
+
+        @media (max-width: 370px) {
+            form {
+                padding: 1rem;
+            }
+
+            h1 {
+                font-size: 2rem;
+            }
+
+            button {
+                font-size: 1rem;
+            }
+
+            .form-row {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div>
+        <h1>Car Price Prediction</h1>
+
+        <form action="/predict" method="POST">
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="name">Car Model:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="year">Year:</label>
+                    <input type="text" id="year" name="year" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="km_driven">Kilometers Driven:</label>
+                    <input type="text" id="km_driven" name="km_driven" required>
+                </div>
+                <div class="form-group">
+                    <label for="fuel">Fuel Type:</label>
+                    <select id="fuel" name="fuel" required>
+                        <option value="Petrol">Petrol</option>
+                        <option value="Diesel">Diesel</option>
+                        <option value="CNG">CNG</option>
+                        <option value="Electric">Electric</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="seller_type">Seller Type:</label>
+                    <select id="seller_type" name="seller_type" required>
+                        <option value="Dealer">Dealer</option>
+                        <option value="Individual">Individual</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="transmission">Transmission:</label>
+                    <select id="transmission" name="transmission" required>
+                        <option value="Manual">Manual</option>
+                        <option value="Automatic">Automatic</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label for="owner">Owner Type:</label>
+                    <select id="owner" name="owner" required>
+                        <option value="First Owner">First Owner</option>
+                        <option value="Second Owner">Second Owner</option>
+                        <option value="Third Owner">Third Owner</option>
+                    </select>
+                </div>
+            </div>
+
+            <button class="predcol" type="submit">Predict Price</button>
+        </form>
+
+        {% if prediction_text %}
         <h2>{{ prediction_text }}</h2>
-    {% endif %}
+        {% endif %}
+    </div>
 </body>
+
 </html>
