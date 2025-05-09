@@ -7,6 +7,8 @@
     <title>Car Price Prediction</title>
     <style>
         body {
+            background-image: url('/static/images/bgg.jpg');
+            background-size: 100% auto;
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
             color: #333;
@@ -26,6 +28,7 @@
         }
 
         form {
+            padding-top: 5%;
             background-color: #fff;
             padding: 2rem;
             border-radius: 8px;
@@ -71,7 +74,7 @@
         }
 
         button:hover {
-            background-color:#333; 
+            background-color: #333;
         }
 
         h2 {
@@ -80,9 +83,18 @@
             margin-top: 2rem;
             font-size: 1.5rem;
         }
-        .predcol{
+
+        .predcol {
             color: aqua;
             background-color: #151915;
+        }
+
+        .abcd {
+            text-align: center;
+            margin-top: 10px;
+            margin-left: 17%;
+            font-size: 1rem;
+            color: #000000;
         }
 
         @media (max-width: 370px) {
@@ -108,7 +120,7 @@
 <body>
     <div>
         <h1>Car Price Prediction</h1>
-
+        <p2 class="abcd">Designed and Developed by Soumyadeep Roy.</p2>
         <form action="/predict" method="POST">
             <div class="form-row">
                 <div class="form-group">
